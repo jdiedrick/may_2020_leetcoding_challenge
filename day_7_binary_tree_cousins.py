@@ -29,3 +29,18 @@ class Solution:
             return True
         else:
             return False
+
+    def isCousins_no_list(self, root: TreeNode, x: int, y: int) -> bool:
+
+        def traverse(node, value, depth, parent):
+            if node:
+                if node.val == value:
+                    return depth, parent
+                depth += 1
+                parent = node.val
+                return traverse(node.left, value, depth, parent) or traverse(node.right, value, depth, parent)
+                
+        x_node_depth, x_node_parent = traverse(root, x, 0, None)
+        y_node_depth, y_node_parent = traverse(root, y, 0, None)
+        
+        return (x_node_depth == y_node_depth) and (x_node_parent != y_node_parent)
